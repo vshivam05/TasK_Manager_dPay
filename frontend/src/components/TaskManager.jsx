@@ -75,11 +75,10 @@ const TaskManager = () => {
     }
   };
 
- const handleToggleComplete = (id, currentStatus) => {
-  const newStatus = currentStatus === "DONE" ? "TODO" : "DONE";
-  handleUpdateTask(id, { status: newStatus });
-};
-
+  const handleToggleComplete = (id, currentStatus) => {
+    const newStatus = currentStatus === "DONE" ? "TODO" : "DONE";
+    handleUpdateTask(id, { status: newStatus });
+  };
 
   const handleEdit = (task) => {
     setEditingTask(task);
@@ -96,7 +95,7 @@ const TaskManager = () => {
   });
 
   return (
-    <div className="max-w-xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto p-4">
       {error && (
         <div className="mb-4 p-2 bg-red-200 text-red-800 rounded">{error}</div>
       )}
