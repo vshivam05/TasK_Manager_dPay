@@ -5,6 +5,7 @@ const TaskForm = ({ onAdd, onUpdate, editingTask, onCancel }) => {
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
   const [linkedFile, setLinkedFile] = useState(null);
+  
 
   useEffect(() => {
     if (editingTask) {
@@ -33,6 +34,7 @@ const TaskForm = ({ onAdd, onUpdate, editingTask, onCancel }) => {
   };
 
   const handleUpdate = (e) => {
+    console.log(e);
     e.preventDefault();
     if (title.trim() === "") return;
     onUpdate({ title: title.trim(), description, deadline, linkedFile });

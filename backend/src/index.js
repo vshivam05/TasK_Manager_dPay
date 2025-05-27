@@ -3,24 +3,28 @@ const express = require("express");
 const cors = require("cors");
 const app = new express();
 const taskRoutes = require("./routes/task.routes");
-require('dotenv').config();
+require("dotenv").config();
 
 // const PORT = 8082;
 // const Mongo_URL = "mongodb://127.0.0.1:27017/task-manager";
-const PORT = process.env.PORT  || 10000;
+const PORT = process.env.PORT || 10000;
 const Mongo_URL = process.env.MONGODB_URL;
 
-mongoose.connect(Mongo_URL
+mongoose
+  .connect(
+    Mongo_URL
     // ,{useNewUrlParser : true,
-    // useUnifiedTopology : true,}
-).then(() => console.log("MongoDB connected successfully"))
-.catch((err) => console.log("Error in connecting with DB, ", err));
-
+    // useUnifiedTopology : true,}  
+  )
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.log("Error in connecting with DB, ", err));
 
 app.use(cors());
+// app.options("*", cors());
+
 app.use(express.json());
 app.use("/tasks", taskRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Backend is running on Port : ${PORT}`);
+  console.log(`Backend is running on Port : ${PORT}`);
 });

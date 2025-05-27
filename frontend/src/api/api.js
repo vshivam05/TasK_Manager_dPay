@@ -13,35 +13,57 @@ export async function fetchTasks() {
 
 export async function createTask(task) {
   try {
-    if (task.linkedFile) {
-      const formData = new FormData();
-      ["title", "description", "deadline"].forEach((key) =>
-        formData.append(key, task[key] || "")
-      );
-      formData.append("linkedFile", task.linkedFile);
+    console.log(task);
+    const formData = new FormData();
+    ["title", "description", "deadline"].forEach((key) =>
+      formData.append(key, task[key] || "")
+    );
 
-      return (await axios.post(API_BASE_URL, formData)).data;
-    } else {
-      return (await axios.post(API_BASE_URL, task)).data;
+    // Add linkedFile to FormData only if it exists
+    if (task.linkedFile) {
+      formData.append("pdf", task.linkedFile);
     }
+
+    const response = await axios.post(API_BASE_URL, formData);
+    return response.data;
   } catch (error) {
+    // Handle error when the response is available, or fallback to a general message
     throw new Error(error.response?.data?.message || "Failed to create task");
   }
 }
 
 export async function updateTask(id, updates) {
-  const trimmedId = id.trim();  // ✅ REMOVE extra spaces
-  console.log(trimmedId, updates);
+  console.log("Updating:", id, updates);
+
   try {
-    const response = await axios.patch(`${API_BASE_URL}/${trimmedId}`, updates);
-    console.log(response);
+    const formData = new FormData();
+    ["title", "description", "deadline"].forEach((key) => {
+      formData.append(key, updates[key] || "");
+    });
+
+    // Add linkedFile to FormData only if it exists
+    if (updates.linkedFile) {
+      formData.append("pdf", updates.linkedFile);
+    }
+    console.log("formData", formData);
+    const response = await axios.patch(
+      `${API_BASE_URL}/${id}`,
+      updates
+      // , {
+      // headers: {
+      // Let axios handle the boundary for multipart/form-data
+      // "Content-Type": "multipart/form-data",
+      // },
+      // }
+    );
+
+    console.log("Update success:", response);
     return response.data;
   } catch (error) {
-    console.error(error); // 👈 log actual error for debugging
-    throw new Error("Failed to update task");
+    console.error("Update error:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Failed to update task");
   }
 }
-
 
 export async function deleteTask(id) {
   console.log(id);

@@ -42,12 +42,12 @@ const TaskManager = () => {
     }
   };
 
-  const handleUpdateTask = async (id, updates) => {
-    console.log("from the update logic in taskmanager", id, updates);
+  const handleUpdateTask = async (id, data) => {
+    console.log("from the update logic in taskmanager", id, data);
     setLoading(true);
     setError(null);
     try {
-      const updatedTask = await updateTask(id, updates);
+      const updatedTask = await updateTask(id, data);
       setTasks((prev) =>
         prev.map((task) => (task.id === id ? updatedTask : task))
       );
