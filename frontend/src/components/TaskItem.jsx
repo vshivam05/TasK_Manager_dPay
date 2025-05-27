@@ -9,15 +9,12 @@ const TaskItem = ({ task, onToggleComplete, onEdit, onDelete }) => {
         isDone ? "bg-green-50" : "bg-white"
       } border-b border-gray-200`}
     >
-      {/* Title */}
       <td className="px-4 py-2 font-medium text-gray-900">{task.title}</td>
 
-      {/* Description */}
       <td className="px-4 py-2 text-gray-600 text-center">
         {task.description}
       </td>
 
-      {/* Status */}
       <td className="px-4 py-2">
         <span
           className={`text-xs px-2 py-1 rounded-full font-medium ${
@@ -30,7 +27,6 @@ const TaskItem = ({ task, onToggleComplete, onEdit, onDelete }) => {
         </span>
       </td>
 
-      {/* Actions */}
       <td className="px-4 py-2">
         <div className="flex items-center space-x-2">
           <input
