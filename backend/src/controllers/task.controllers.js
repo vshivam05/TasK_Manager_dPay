@@ -30,7 +30,7 @@ const createTask = async (req, res) => {
   };
 
 const updateTask = async(req, res) => {
-    console.log("from the task update controller")
+    console.log("from the task update controller", req.body)
     try{
         const id = req.params.id;
         const result =  await TaskService.update(id, req.body);

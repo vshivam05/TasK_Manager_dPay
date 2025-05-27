@@ -37,7 +37,7 @@ const TaskForm = ({ onAdd, onUpdate, editingTask, onCancel }) => {
     console.log(e);
     e.preventDefault();
     if (title.trim() === "") return;
-    onUpdate({ title: title.trim(), description, deadline, linkedFile });
+    onUpdate({ title: title.trim(), description, deadline });
     setTitle("");
     setDescription("");
     setDeadline("");

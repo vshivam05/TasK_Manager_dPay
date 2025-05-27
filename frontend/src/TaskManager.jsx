@@ -16,6 +16,7 @@ const TaskManager = () => {
     setError(null);
     try {
       const data = await fetchTasks();
+      console.log("fetched tasks data", data);
       setTasks(data);
     } catch (err) {
       setError(err.message || "Failed to load tasks");
@@ -51,6 +52,7 @@ const TaskManager = () => {
       setTasks((prev) =>
         prev.map((task) => (task.id === id ? updatedTask : task))
       );
+      loadTasks();
       setEditingTask(null);
     } catch (err) {
       setError(err.message || "Failed to update task");
@@ -73,9 +75,11 @@ const TaskManager = () => {
     }
   };
 
-  const handleToggleComplete = (id, completed) => {
-    handleUpdateTask(id, { completed });
-  };
+ const handleToggleComplete = (id, currentStatus) => {
+  const newStatus = currentStatus === "DONE" ? "TODO" : "DONE";
+  handleUpdateTask(id, { status: newStatus });
+};
+
 
   const handleEdit = (task) => {
     setEditingTask(task);
@@ -86,8 +90,8 @@ const TaskManager = () => {
   };
 
   const filteredTasks = tasks.filter((task) => {
-    if (filter === "Completed") return task.completed;
-    if (filter === "Pending") return !task.completed;
+    if (filter === "Completed") return task.status === "DONE";
+    if (filter === "Pending") return task.status === "TODO";
     return true;
   });
 

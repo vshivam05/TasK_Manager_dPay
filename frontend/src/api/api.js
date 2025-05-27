@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const API_BASE_URL = "http://localhost:8082/tasks"; // Adjust the URL to your backend
-const API_BASE_URL = "https://task-manager-dpay.onrender.com/tasks"; // Adjust the URL to your backend
+const API_BASE_URL = "http://localhost:8082/tasks"; // Adjust the URL to your backend
+// const API_BASE_URL = "https://task-manager-dpay.onrender.com/tasks"; // Adjust the URL to your backend
 
 export async function fetchTasks() {
   try {
@@ -34,30 +34,17 @@ export async function createTask(task) {
 }
 
 export async function updateTask(id, updates) {
-  console.log("Updating:", id, updates);
-
+  
   try {
-    const formData = new FormData();
-    ["title", "description", "deadline"].forEach((key) => {
-      formData.append(key, updates[key] || "");
-    });
-
-    // Add linkedFile to FormData only if it exists
-    if (updates.linkedFile) {
-      formData.append("pdf", updates.linkedFile);
-    }
-    console.log("formData", formData);
-    const response = await axios.patch(
-      `${API_BASE_URL}/${id}`,
-      updates
-      // , {
-      // headers: {
-      // Let axios handle the boundary for multipart/form-data
-      // "Content-Type": "multipart/form-data",
-      // },
-      // }
-    );
-
+    // const formData = new FormData();
+    // ["title", "description", "deadline"].forEach((key) => {
+    //   formData.append(key, updates[key] || "");
+    // });
+    
+    // console.log("formData", formData);
+    console.log("Updating:", id, updates);
+    const response = await axios.put(`${API_BASE_URL}/${id}`, updates);
+    
     console.log("Update success:", response);
     return response.data;
   } catch (error) {
